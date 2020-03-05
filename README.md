@@ -1,6 +1,6 @@
 # Publis
 
-## Publish client-side application bundles to S3
+*Publish client-side application bundles to S3*
 
 
 ### Environment variables
