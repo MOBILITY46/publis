@@ -60,6 +60,36 @@ impl Client {
         Ok(())
     }
 
+    pub async fn get_policy(&self, bucket: &str) -> Result<Option<String>, String> {
+        let request = rusoto_s3::GetBucketPolicyRequest {
+            bucket: bucket.into(),
+        };
+
+        Ok(self
+            .s3
+            .get_bucket_policy(request)
+            .await
+            .map(|r| r.policy)
+            .map_err(|e| format!("Could not get bucket policy for {}\nerror: {}", bucket, e))?)
+    }
+
+    pub async fn add_website_policy(&self, bucket: &str) -> Result<super::BucketPolicy, String> {
+        let policy = super::BucketPolicy::website(bucket);
+        let json =
+            serde_json::to_string(&policy).map_err(|e| format!("Serializing error: {}", e))?;
+
+        Ok(self
+            .s3
+            .put_bucket_policy(rusoto_s3::PutBucketPolicyRequest {
+                bucket: bucket.into(),
+                policy: json,
+                ..rusoto_s3::PutBucketPolicyRequest::default()
+            })
+            .await
+            .map(|_| policy)
+            .map_err(|e| format!("Could not add policy error: {}", e))?)
+    }
+
     fn read_bytes(&self, file: &mut std::fs::File) -> std::io::Result<Vec<u8>> {
         let mut data = Vec::new();
         file.read_to_end(&mut data)?;

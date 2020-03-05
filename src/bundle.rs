@@ -1,4 +1,4 @@
-use crate::s3::Client;
+use crate::s3::{BucketPolicy, Client};
 use std::fs::{self, DirEntry};
 use std::io;
 use std::path::Path;
@@ -16,6 +16,23 @@ pub async fn upload_all(root: &str, bucket: &str) -> Result<(), String> {
     }
 
     Ok(())
+}
+
+pub async fn add_bucket_policy(bucket: &str) -> Result<BucketPolicy, String> {
+    let client = Client::new()?;
+    let policy_str = client.get_policy(bucket).await?;
+
+    match policy_str {
+        Some(p) => {
+            let policy = serde_json::from_str::<BucketPolicy>(&p)
+                .map_err(|e| format!("Error while deserializing policy: {}", e))?;
+            Ok(policy)
+        }
+        None => {
+            let policy = client.add_website_policy(bucket).await?;
+            Ok(policy)
+        }
+    }
 }
 
 fn walk_bundle(dir: &Path, entries: &mut Vec<DirEntry>) -> io::Result<()> {

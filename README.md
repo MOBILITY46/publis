@@ -11,8 +11,15 @@ export AWS_SECRET_ACCESS_KEY=""
 export AWS_REGION=""
 ```
 
-### Run
+### Commands
 
+Upload bundle to S3 run:
 ```
     publis --bucket <bucket> --root <root>
 ```
+
+Add a website policy to the bucket run:
+```
+    publis --bucket <bucket> --add-policy
+```
+

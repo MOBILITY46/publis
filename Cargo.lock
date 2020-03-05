@@ -874,6 +874,8 @@ dependencies = [
  "rusoto",
  "rusoto_core",
  "rusoto_s3",
+ "serde",
+ "serde_json",
  "structopt",
  "tokio",
 ]
