@@ -1,6 +1,6 @@
 # Publis
 
-## Publish client-side application bundles to S3
+*Publish client-side application bundles to S3*
 
 
 ### Environment variables
@@ -10,6 +10,7 @@ export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
 export AWS_REGION=""
 ```
+```AWS_REGION``` defaults to **eu-north-1**
 
 ### Commands
 
