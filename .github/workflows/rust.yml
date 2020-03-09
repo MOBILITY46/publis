@@ -1,19 +1,17 @@
 name: Rust
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push]
 
 jobs:
   build:
-    name: Create Release
     runs-on: ubuntu-latest
+
     steps:
-      - name: Build
-      - uses: actions/checkout@master
-      - uses: actions-rs/cargo@v1
+      - uses: actions/checkout@v1
+      - uses: actions-rs/cargo@v1.0.1
         with:
           command: build
-          args: --release --all-features
+          args: --release
+      - uses: TheDoctor0/zip-release@v0.2.1
+        with:
+          path: target/release
