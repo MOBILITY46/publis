@@ -25,7 +25,7 @@ impl Client {
         Ok(Self { s3: s3_client })
     }
 
-    pub async fn upload(&self, entry: std::fs::DirEntry, bucket: &str) -> Result<(), String> {
+    pub async fn upload(&self, entry: std::fs::DirEntry, bucket: &str, dry: bool) -> Result<(), String> {
         let mime = mime_guess::from_path(entry.path());
         let mut file = File::open(entry.path()).map_err(|e| format!("File open error: {}", e))?;
 
@@ -33,6 +33,11 @@ impl Client {
             .file_name()
             .into_string()
             .expect("Could not read filename");
+
+        if dry == true {
+            println!("Entry: {}", file_name);
+            return Ok(());
+        }
 
         println!("Uploading entry: {}", file_name);
 

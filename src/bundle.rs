@@ -3,7 +3,7 @@ use std::fs::{self, DirEntry};
 use std::io;
 use std::path::Path;
 
-pub async fn upload_all(root: &str, bucket: &str) -> Result<(), String> {
+pub async fn upload_all(root: &str, bucket: &str, dry: bool) -> Result<(), String> {
     let client = Client::new()?;
     let mut entries = Vec::new();
 
@@ -12,7 +12,7 @@ pub async fn upload_all(root: &str, bucket: &str) -> Result<(), String> {
     let entries = entries.into_iter();
 
     for entry in entries {
-        client.upload(entry, bucket).await?;
+        client.upload(entry, bucket, dry).await?;
     }
 
     Ok(())

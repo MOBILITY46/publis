@@ -20,6 +20,13 @@ struct Opt {
         help = "Add policy to serve static content"
     )]
     add_policy: bool,
+
+    #[structopt(
+        long,
+        takes_value = false,
+        help = "Dry run. List files that would be uploaded"
+    )]
+    dry: bool,
 }
 
 #[tokio::main]
@@ -37,10 +44,14 @@ async fn main() {
     }
 
     if let Some(root) = opt.root {
-        let result = crate::bundle::upload_all(&root, &opt.bucket).await;
+        let result = crate::bundle::upload_all(&root, &opt.bucket, opt.dry).await;
 
         match result {
-            Ok(()) => println!("Bundle successfully uploaded."),
+            Ok(()) => {
+                if opt.dry == false {
+                    println!("Bundle successfully uploaded.")
+                }
+            },
             Err(err) => eprintln!("{}", err),
         }
     }
