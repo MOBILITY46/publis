@@ -24,3 +24,8 @@ Add a website policy to the bucket run:
     publis --bucket <bucket> --add-policy
 ```
 
+Run dry. See what wil lget uploaded:
+```
+    publis --bucket <bucket> --root <root> --dry
+```
+
