@@ -1,0 +1,18 @@
+{
+  "name": "publis",
+  "version": "1.0.0",
+  "description": "*Publish client-side application bundles to S3*",
+  "scripts": {
+    "postinstall": "node ./install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mobility46/publis.git"
+  },
+  "author": "David Jobe <david.jobe@mobility46.se>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mobility46/publis/issues"
+  },
+  "homepage": "https://github.com/mobility46/publis#readme"
+}
