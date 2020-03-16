@@ -1,0 +1,14 @@
+name: Build
+
+on: [push]
+
+
+jobs:
+  build_and_test:
+    name: Cargo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
