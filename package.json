@@ -1,12 +1,12 @@
 {
   "name": "publis",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "*Publish client-side application bundles to S3*",
   "bin": {
-    "publis": "publis"
+    "publis": "./bin/publis"
   },
   "scripts": {
-    "postinstall": "node ./install.js"
+    "postinstall": "node ./npm/install.js"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/mobility46/publis/issues"
   },
-  "homepage": "https://github.com/mobility46/publis#readme"
+  "homepage": "https://github.com/mobility46/publis#readme",
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
 }
