@@ -34,7 +34,6 @@ async fn main() {
     let opt = Opt::from_args();
 
     if opt.add_policy {
-        println!("add policy: {}", true);
         let result = crate::bundle::add_bucket_policy(&opt.bucket).await;
 
         match result {
@@ -51,7 +50,7 @@ async fn main() {
                 if opt.dry == false {
                     println!("Bundle successfully uploaded.")
                 }
-            },
+            }
             Err(err) => eprintln!("{}", err),
         }
     }

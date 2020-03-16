@@ -25,7 +25,12 @@ impl Client {
         Ok(Self { s3: s3_client })
     }
 
-    pub async fn upload(&self, entry: std::fs::DirEntry, bucket: &str, dry: bool) -> Result<(), String> {
+    pub async fn upload(
+        &self,
+        entry: std::fs::DirEntry,
+        bucket: &str,
+        dry: bool,
+    ) -> Result<(), String> {
         let mime = mime_guess::from_path(entry.path());
         let mut file = File::open(entry.path()).map_err(|e| format!("File open error: {}", e))?;
 

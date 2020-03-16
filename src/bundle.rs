@@ -20,10 +20,13 @@ pub async fn upload_all(root: &str, bucket: &str, dry: bool) -> Result<(), Strin
 
 pub async fn add_bucket_policy(bucket: &str) -> Result<BucketPolicy, String> {
     let client = Client::new()?;
-    let policy_str = client.get_policy(bucket).await?;
+    let policy_opt = client.get_policy(bucket).await?;
 
-    match policy_str {
+    match policy_opt {
         Some(p) => {
+            // TODO: This means that there is existing policies.
+            // If it does NOT contain the website policy, add and upload it.
+
             let policy = serde_json::from_str::<BucketPolicy>(&p)
                 .map_err(|e| format!("Error while deserializing policy: {}", e))?;
             Ok(policy)
