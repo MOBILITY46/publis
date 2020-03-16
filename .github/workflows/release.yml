@@ -7,21 +7,27 @@ name: Create Release
 
 jobs:
   build:
-    name: Publish binaries
     runs-on: ubuntu-latest
 
     steps:
-    - uses: hecrj/setup-rust-action@v1-release
-      with:
-        rust-version: stable
-    - uses: actions/checkout@v1
-    - name: Build
-      run: cargo build --release
-    - name: Upload binaries to release
-      uses: svenstaro/upload-release-action@v1-release
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: target/release/publis
-        asset_name: publis
-        tag: ${{ github.ref }}
-        overwrite: true
+      - name: checkout
+        uses: actions/checkout@v1
+
+      - name: install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          default: true
+          override: true
+
+      - name: build
+        run: cargo build --release
+
+      - name: release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            target/release/publis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
