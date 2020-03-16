@@ -2,6 +2,9 @@
   "name": "publis",
   "version": "1.0.0",
   "description": "*Publish client-side application bundles to S3*",
+  "bin": {
+    "publis": "publis"
+  },
   "scripts": {
     "postinstall": "node ./install.js"
   },
