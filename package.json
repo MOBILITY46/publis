@@ -1,6 +1,6 @@
 {
-  "name": "publis",
-  "version": "0.2.0",
+  "name": "@m46/publis",
+  "version": "0.2.1",
   "description": "*Publish client-side application bundles to S3*",
   "bin": {
     "publis": "./bin/publis"

@@ -22,12 +22,17 @@ jobs:
 
       - name: build
         run: cargo build --release
+      
+      - name: Archive using tar
+        uses: juankaram/archive-action@v1
+        with: |
+          tar -czvf publis.tar.gz target/release/publis
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            target/release/publis
+            publis.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

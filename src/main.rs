@@ -7,7 +7,7 @@ use structopt::StructOpt;
 #[derive(Debug, StructOpt)]
 #[structopt(name = "Publis", about = "Publish files to S3")]
 struct Opt {
-    #[structopt(short, long)]
+    #[structopt(short, long, help = "Your S3 bucket name")]
     bucket: String,
 
     #[structopt(short, long, help = "Your bundle root directory")]
@@ -27,6 +27,12 @@ struct Opt {
         help = "Dry run. List files that would be uploaded"
     )]
     dry: bool,
+
+    #[structopt(
+        long,
+        help = "Cache-Control max age (in seconds) defaults to 3600 (one hour)"
+    )]
+    max_age: Option<u16>,
 }
 
 #[tokio::main]
@@ -43,7 +49,8 @@ async fn main() {
     }
 
     if let Some(root) = opt.root {
-        let result = crate::bundle::upload_all(&root, &opt.bucket, opt.dry).await;
+        let max_age = opt.max_age.unwrap_or(3600);
+        let result = crate::bundle::upload_all(&root, &opt.bucket, opt.dry, max_age).await;
 
         match result {
             Ok(()) => {
@@ -53,5 +60,7 @@ async fn main() {
             }
             Err(err) => eprintln!("{}", err),
         }
+    } else {
+        eprintln!("Nothing was done here");
     }
 }

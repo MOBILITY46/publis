@@ -30,6 +30,7 @@ impl Client {
         entry: std::fs::DirEntry,
         bucket: &str,
         dry: bool,
+        max_age: u16,
     ) -> Result<(), String> {
         let mime = mime_guess::from_path(entry.path());
         let mut file = File::open(entry.path()).map_err(|e| format!("File open error: {}", e))?;
@@ -56,6 +57,7 @@ impl Client {
         let request = rusoto_s3::PutObjectRequest {
             bucket: bucket.into(),
             content_type: mime.first().map(|m| m.to_string()),
+            cache_control: Some(format!("max-age={}", max_age)),
             body: Some(data.into()),
             key: file_name,
             content_length: Some(metadata.len() as i64),
