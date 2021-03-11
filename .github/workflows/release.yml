@@ -10,28 +10,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v1
 
-      - name: install toolchain
+      - name: Install toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           default: true
           override: true
 
-      - name: build
+      - name: Build
         run: cargo build --release
 
-      - name: Archive using tar
-        uses: juankaram/archive-action@v1
-        with: |
-          tar -czvf publis.tar.gz target/release/publis
-
-      - name: release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            publis.tar.gz
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: |
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          tar -czvf publis.tar.gz target/release/publis
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./target/release/publis
+          asset_name: publis
+
