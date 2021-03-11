@@ -31,7 +31,6 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          tar -czvf publis.tar.gz target/release/publis
 
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
