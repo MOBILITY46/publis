@@ -61,6 +61,6 @@ async fn main() {
             Err(err) => eprintln!("{}", err),
         }
     } else {
-        eprintln!("Nothing was done here");
+        eprintln!("Nothing was done here. (NoOp)");
     }
 }

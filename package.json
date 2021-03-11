@@ -1,6 +1,6 @@
 {
   "name": "@m46/publis",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "*Publish client-side application bundles to S3*",
   "bin": {
     "publis": "./bin/publis"
@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/mobility46/publis#readme",
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   }
 }

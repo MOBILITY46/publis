@@ -22,7 +22,7 @@ jobs:
 
       - name: build
         run: cargo build --release
-      
+
       - name: Archive using tar
         uses: juankaram/archive-action@v1
         with: |
@@ -35,4 +35,3 @@ jobs:
             publis.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

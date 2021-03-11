@@ -26,6 +26,7 @@ pub async fn add_bucket_policy(bucket: &str) -> Result<BucketPolicy, String> {
         Some(p) => {
             // TODO: This means that there is existing policies.
             // If it does NOT contain the website policy, add and upload it.
+            // We need to figure out how it is supposed to look with multiple
 
             let policy = serde_json::from_str::<BucketPolicy>(&p)
                 .map_err(|e| format!("Error while deserializing policy: {}", e))?;
