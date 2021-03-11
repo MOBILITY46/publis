@@ -40,4 +40,5 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./target/release/publis
           asset_name: publis
+          asset_content_type: application/octet-stream
 
